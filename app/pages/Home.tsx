@@ -13,8 +13,8 @@ const Home = () => {
             </header>    
         
         <footer>
-                <Footer/>
-            </footer>
+            <Footer/>
+        </footer>
     </>
   )
 }
