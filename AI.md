@@ -173,3 +173,70 @@ const response = await fetch(`${supabaseUrl}/rest/v1/leituras`, {
   } as Record<string, string> // <-- Add this to satisfy TypeScript
 });
 
+# Documentação de Uso de Inteligência Artificial (AI.md)
+
+Este documento registra de forma transparente como as ferramentas de Inteligência Artificial foram utilizadas durante o desenvolvimento do componente **Central de Alertas** (`AlertCenter`) do projeto **High Water** (sistema de monitoramento de nível de água e prevenção de enchentes).
+
+---
+
+## 1. Ferramentas Utilizadas
+
+* **Google Gemini (Modelo Gemini 3 Flash):** Utilizado como assistente de programação, depuração (debugging), configuração de banco de dados (Supabase/SQL) e refatoração de interface (Tailwind CSS).
+
+---
+
+## 2. Interações Realizadas
+
+Abaixo estão exemplos representativos dos prompts reais enviados pelo grupo (incluindo capturas de tela da interface, código e banco de dados) e as respectivas respostas obtidas durante o desenvolvimento:
+
+* **Integração inicial com a API do Supabase:**
+  * **Prompt:** *"adapt this code to show a chart using the data of an supabase API and the api is shown on the image and this is the code: [...]"* (acompanhado de print da tabela `leituras` no Supabase).
+  * **Resposta obtida:** A IA adaptou a requisição `fetch` adicionando o parâmetro de ordenação cronológica (`?order=timestamp.asc`), formatou o campo `timestamp` (`timestamptz`) para o padrão legível de horas (`HH:mm:ss`) no eixo X e ajustou o componente `LineChart` da biblioteca Recharts.
+
+* **Depuração de renderização e Next.js App Router:**
+  * **Prompt:** *"não está funcionando"* / *"não aparece o gráfico"* / *"não existe nada no console"* (acompanhado de prints do editor e da tela em branco).
+  * **Resposta obtida:** A IA identificou erros de sintaxe (parênteses extras no `.map()`), adicionou a diretiva `'use client'` exigida pelo Next.js para componentes com hooks (`useState`, `useEffect`) e implementou um estado `mounted` com dados simulados (mock) para isolar e validar a renderização do gráfico no navegador.
+
+* **Resolução de tipagem TypeScript e layout:**
+  * **Prompt:** *"agora o gráfico está sendo cortado"* + prints de erros de tipagem no VS Code (`ts(2345)`).
+  * **Resposta obtida:** A IA definiu altura fixa (`height={400}`) no `ResponsiveContainer` para evitar o colapso do gráfico, ajustou as margens internas e tipou explicitamente os estados (`useState<any[]>([])` e `useState<string | null>(null)`), além de tratar o tipo `unknown` no bloco `catch`.
+
+* **Diagnóstico de Banco de Dados e Políticas RLS:**
+  * **Prompt:** *"caso tenha que mudar algo no supabase me fale o que e onde"* (acompanhado de print do painel de diagnósticos mostrando `Registos encontrados: 0` e print da tela de *Policies* do Supabase).
+  * **Resposta obtida:** A IA criou um painel visual de diagnóstico no componente para verificar o status da requisição e identificou que as políticas de **RLS (Row Level Security)** da tabela `leituras` permitiam leitura (`SELECT`), mas bloqueavam inserções (`INSERT`) não autenticadas. Forneceu os comandos SQL para liberar a inserção pública de leituras pelos sensores.
+
+* **Estilização com Tailwind CSS e Identidade Visual:**
+  * **Prompt:** *"now change the ui code for tailwind css and use this colors"* (acompanhado de imagem com a paleta de cores do projeto).
+  * **Resposta obtida:** A IA converteu todos os estilos inline (`style={{...}}`) para classes utilitárias do Tailwind CSS, aplicando a paleta oficial: Grafite profundo (`#111418`), Ciano vibrante (`#00D5E8`), Amarelo sinalização (`#FFD000`), Azul petróleo (`#087F9B`) e Branco (`#FFFFFF`).
+
+---
+
+## 3. Aplicação no Projeto
+
+Com o auxílio da IA, foram desenvolvidos, modificados e configurados os seguintes elementos do projeto:
+
+* **Componente `AlertCenter` (`AlertCenter.tsx` / `AlertCenter.jsx`):**
+  * Consumo da API REST do Supabase (`/rest/v1/leituras`) com autenticação via headers (`apikey` e `Authorization`).
+  * Tratamento e formatação de dados temporais (`toLocaleTimeString`) para exibição no gráfico.
+  * Renderização responsiva do gráfico de linha (`LineChart`, `XAxis`, `YAxis`, `Tooltip`, `CartesianGrid`) exibindo a evolução de `nivel_agua_cm`.
+  * Sistema de tratamento de erros e estados de carregamento (`loading`, `erro`, `mounted`) com feedback visual estilizado em Tailwind CSS.
+* **Configuração de Segurança no Supabase (SQL):**
+  * Criação das políticas de acesso (`CREATE POLICY`) para permitir operações de `SELECT` e `INSERT` na tabela `leituras`.
+
+---
+
+## 4. Validação das Respostas
+
+O grupo não aplicou os códigos gerados de forma passiva; todas as entregas da IA passaram por validação prática e iterativa:
+
+1. **Testes Isolados (Mock Data):** Quando o gráfico não renderizava, o grupo aplicou a versão de teste com dados fictícios sugerida pela IA para confirmar que a biblioteca Recharts estava funcionando antes de religar a API real.
+2. **Inspeção no Navegador e Terminal:** Verificamos o console do navegador (`F12`), os avisos do compilador TypeScript no editor de código e o painel de diagnóstico visual embutido na tela para confirmar se os dados estavam sendo recebidos corretamente.
+3. **Validação no Painel do Supabase:** Conferimos diretamente na aba *Authentication > Policies* e no *Table Editor* do Supabase se as políticas SQL sugeridas surtiram efeito e se os registros estavam estruturados conforme esperado.
+4. **Ajustes Visuais:** Testamos a responsividade e o contraste das cores aplicadas via Tailwind CSS diretamente na interface escura do site.
+
+---
+
+## 5. Análise Crítica
+
+* **Benefícios:** O uso da IA acelerou significativamente a resolução de problemas de integração entre tecnologias diferentes (Next.js App Router, TypeScript, Recharts e Supabase). A capacidade da ferramenta de interpretar capturas de tela (prints de erros do VS Code, estrutura de tabelas e paleta de cores) facilitou diagnósticos precisos, como a identificação de bloqueios de RLS no Supabase e conflitos de hidratação do `ResponsiveContainer`.
+* **Limitações e Dificuldades:** A IA não possuía acesso direto ao ambiente local do projeto nem às configurações internas do painel do Supabase em tempo real. Por isso, foram necessárias várias iterações para descobrir que o problema inicial não era apenas no código React, mas sim na combinação entre tipagem estrita do TypeScript (`never[]`), ausência da diretiva `'use client'` e regras de segurança (RLS) do banco de dados. Além disso, cada sugestão exigiu revisão manual para garantir que as variáveis de ambiente (`.env.local`) e a estrutura de pastas do grupo fossem respeitadas.

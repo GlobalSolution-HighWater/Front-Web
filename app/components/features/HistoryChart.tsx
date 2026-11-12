@@ -69,7 +69,7 @@ export default function AlertCenter() {
     return (
     <>
     <div className='min-h-screen bg-[#111418]'>
-      <div className="w-full max-w-6xl mx-auto my-10 p-6 bg-[#111418] text-white rounded-xl shadow-2xl border border-[#087F9B]/30 box-border">
+      <div className="w-full mx-auto my-10 p-6 bg-[#111418] text-white rounded-xl shadow-2xl border border-[#087F9B]/30 box-border">
         <h2 className="mb-4 text-2xl font-bold tracking-wide text-white">
           Histórico do nível da Água
         </h2>
