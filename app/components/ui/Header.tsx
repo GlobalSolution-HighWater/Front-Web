@@ -11,8 +11,8 @@ const Header = () => {
         </Link>  
       <nav className='flex items-center px-10  text-white font-sans text-lg'>
                 <Link href="/" className=' px-2 opacity-90 hover:opacity-100'>Home</Link>
-                <Link href="" className=' px-2 opacity-90 hover:opacity-100'>Solução</Link>
-                <Link href="/Simulation" className=' px-2 opacity-90 hover:opacity-100'>Simulação</Link>
+                <Link href="/solution" className=' px-2 opacity-90 hover:opacity-100'>Solução</Link>
+                <Link href="/simulation" className=' px-2 opacity-90 hover:opacity-100'>Simulação</Link>
       </nav>
     </header>
   )

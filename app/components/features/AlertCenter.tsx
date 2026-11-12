@@ -41,7 +41,6 @@ export default function AlertCenter() {
         }
 
         const rawData = await response.json();
-        console.log("Dados brutos do Supabase:", rawData);
 
         if (Array.isArray(rawData)) {
           const dadosFormatados = rawData.map(item => ({
@@ -56,7 +55,6 @@ export default function AlertCenter() {
         }
       } catch (error: unknown) {
         const errorMessage = error instanceof Error ? error.message : String(error);
-        console.error("Erro capturado:", errorMessage);
         setErro(errorMessage);
       } finally {
         setLoading(false);
@@ -68,68 +66,75 @@ export default function AlertCenter() {
 
   if (!mounted) return null;
 
-  return (
-    <div style={{ width: '100%', maxWidth: '1200px', margin: '40px auto', padding: '20px', color: '#fff', background: '#18181b', borderRadius: '12px', boxSizing: 'border-box' }}>
-      <h2 style={{ marginBottom: '15px', fontSize: '1.5rem' }}>Central de Alertas - Nível da Água (Supabase)</h2>
-      
-      {/* PAINEL DE DIAGNÓSTICO VISUAL */}
-      <div style={{ background: '#27272a', padding: '10px 15px', borderRadius: '6px', marginBottom: '20px', fontSize: '13px', color: '#a1a1aa' }}>
-        🔍 <strong>Diagnóstico:</strong> 
-        Loading: <span style={{ color: loading ? '#facc15' : '#4ade80' }}>{String(loading)}</span> | 
-        Erro: <span style={{ color: erro ? '#f87171' : '#4ade80' }}>{erro || 'Nenhum'}</span> | 
-        Registos encontrados: <strong style={{ color: '#38bdf8' }}>{dados.length}</strong>
+    return (
+    <>
+    <div className='min-h-screen bg-[#111418]'>
+      <div className="w-full max-w-6xl mx-auto my-10 p-6 bg-[#111418] text-white rounded-xl shadow-2xl border border-[#087F9B]/30 box-border">
+        <h2 className="mb-4 text-2xl font-bold tracking-wide text-white">
+          Nível da Água
+        </h2>
+
+        {loading && <p className="text-gray-400">Carregando dados... Aguarde Por Favor.</p>}
+        
+        {erro && (
+          <div className="p-4 bg-red-950/40 border border-red-500/50 rounded-lg text-red-200 my-4">
+            <strong>⚠️ Erro de Ligação:</strong> {erro}
+          </div>
+        )}
+
+        {!loading && !erro && dados.length === 0 && (
+          <div className="p-5 bg-[#FFD000]/10 border border-[#FFD000]/40 rounded-lg text-[#FFD000]">
+            <p className="font-semibold">Aviso: A ligação ao Supabase foi bem-sucedida, mas a tabela <strong>leituras</strong> retornou 0 registos.</p>
+            <p className="text-xs mt-1 text-gray-300">Insira dados na tabela ou verifique as políticas de inserção no Supabase.</p>
+          </div>
+        )}
+
+        {!loading && !erro && dados.length > 0 && (
+          <div className="w-full h-[400px]">
+            <ResponsiveContainer width="100%" height={400}>
+              <LineChart 
+                data={dados} 
+                margin={{ top: 20, right: 30, left: 10, bottom: 20 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" stroke="#087F9B" opacity={0.3} />
+                <XAxis 
+                  dataKey="timestampFormatted" 
+                  stroke="#FFFFFF" 
+                  opacity={0.8}
+                  tick={{ fontSize: 12 }} 
+                  dy={10}
+                /> 
+                <YAxis 
+                  unit=" cm" 
+                  stroke="#FFFFFF" 
+                  opacity={0.8}
+                  tick={{ fontSize: 12 }} 
+                  width={75} 
+                />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: '#111418', 
+                    borderColor: '#087F9B', 
+                    color: '#FFFFFF', 
+                    borderRadius: '8px',
+                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.5)'
+                  }}
+                  formatter={(value) => [`${value} cm`, 'Nível da Água']}
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="nivel_agua_cm" 
+                  stroke="#00D5E8" 
+                  strokeWidth={3} 
+                  dot={{ fill: '#00D5E8', r: 4 }}
+                  activeDot={{ r: 6, fill: '#FFD000' }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        )}
       </div>
-
-      {loading && <p style={{ color: '#aaa' }}>A carregar dados do Supabase...</p>}
-      
-      {erro && (
-        <div style={{ padding: '15px', background: '#3a1111', border: '1px solid #ff5555', borderRadius: '5px', color: '#ff8888', margin: '15px 0' }}>
-          <strong>⚠️ Erro de Ligação:</strong> {erro}
-        </div>
-      )}
-
-      {!loading && !erro && dados.length === 0 && (
-        <div style={{ padding: '20px', background: '#2d1b0d', border: '1px solid #f59e0b', borderRadius: '6px', color: '#fcd34d' }}>
-          <p><strong>Aviso:</strong> A ligação ao Supabase foi bem-sucedida, mas a tabela <strong>leituras</strong> retornou 0 registos.</p>
-          <p style={{ fontSize: '13px', marginTop: '5px' }}>Verifique se existem linhas na tabela ou se as políticas RLS estão a bloquear a leitura.</p>
-        </div>
-      )}
-
-      {!loading && !erro && dados.length > 0 && (
-        <div style={{ width: '100%', height: '400px' }}>
-          <ResponsiveContainer width="100%" height={400}>
-            <LineChart 
-              data={dados} 
-              margin={{ top: 20, right: 30, left: 10, bottom: 20 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-              <XAxis 
-                dataKey="timestampFormatted" 
-                stroke="#aaa" 
-                tick={{ fontSize: 12 }} 
-                dy={10}
-              /> 
-              <YAxis 
-                unit=" cm" 
-                stroke="#aaa" 
-                tick={{ fontSize: 12 }} 
-                width={75} 
-              />
-              <Tooltip 
-                contentStyle={{ backgroundColor: '#18181b', borderColor: '#444', color: '#fff', borderRadius: '6px' }}
-                formatter={(value) => [`${value} cm`, 'Nível da Água']}
-              />
-              <Line 
-                type="monotone" 
-                dataKey="nivel_agua_cm" 
-                stroke="#00ffcc" 
-                strokeWidth={2.5} 
-                dot={true}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-      )}
     </div>
+    </>
   );
 }
