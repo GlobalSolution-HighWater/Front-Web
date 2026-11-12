@@ -1,9 +1,15 @@
 // Componente para que monta um gráfico para mostrar o histórico de um período sobre a região analisada
 // Component that crate a chart that shows the history in a period about a analyzed region
 'use client';
-
+import { Neuton } from "next/font/google";
 import { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
+
+const neutonFont = Neuton({
+    subsets: ["latin"],
+    weight: "400",
+});
+
 
 export default function AlertCenter() {
   const [dados, setDados] = useState<any[]>([]);
@@ -69,6 +75,9 @@ export default function AlertCenter() {
     return (
     <>
     <div className='min-h-screen bg-[#111418]'>
+      <div className={`${neutonFont.className} text-2xl px-10 py-5 m-3 `}>
+        <h2>A seguir temos um gráfico com os dados obtidos em todo o período ativo do nosso dispositivo que atualiza automáticamente e mostra o nível atual da água no local monitorado.</h2>
+        </div>
       <div className="w-full mx-auto my-10 p-6 bg-[#111418] text-white rounded-xl shadow-2xl border border-[#087F9B]/30 box-border">
         <h2 className="mb-4 text-2xl font-bold tracking-wide text-white">
           Histórico do nível da Água
