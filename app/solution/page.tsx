@@ -11,12 +11,12 @@ export default function SolutionPage() {
   return (
     <>
       <Header/>
-      <main className="bg-[#111418] flex flex-col items-center justify-center">
-        <h1 className="text-white text-2xl font-bold mb-6">Central de Monitoramento</h1>
-        <LevelAlert />
-      </main>
-      <AlertCenter/>
-      <HistoryChart/>
+        <main className="bg-[#111418] flex flex-col items-center justify-center">
+          <h1 className="text-white text-2xl font-bold mb-6">Central de Monitoramento</h1>
+          <LevelAlert />
+        </main>
+        <AlertCenter/>
+        <HistoryChart/>
       <Footer/>
     </>
   );
