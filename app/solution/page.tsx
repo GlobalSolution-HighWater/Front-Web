@@ -5,11 +5,16 @@ import AlertCenter from '../components/features/AlertCenter'
 import HistoryChart from '../components/features/HistoryChart';
 import Header from '../components/ui/Header';
 import Footer from '../components/ui/Footer';
+import LevelAlert from '../components/features/LevelAlert';
 
 export default function SolutionPage() {
   return (
     <>
       <Header/>
+      <main className="bg-[#111418] flex flex-col items-center justify-center">
+        <h1 className="text-white text-2xl font-bold mb-6">Central de Monitoramento</h1>
+        <LevelAlert />
+      </main>
       <AlertCenter/>
       <HistoryChart/>
       <Footer/>
