@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 const Footer = () => {
   return (
-    <footer className=' w-auto bg-[#111418]'>
+    <footer className=' sticky flex flex-wrap items-center w-auto justify-between px-5 bg-[#111418] '>
         <div className="mx-auto flex py-10 justify-center ">
             <div className='opacity-70 px-5'>
                 <p>&copy; 2026 High Water. Todos os direitos reservados.</p>
