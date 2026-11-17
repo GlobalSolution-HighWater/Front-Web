@@ -19,7 +19,6 @@ const Home = () => {
       </header>
 
       <main className={`${neutonFont.className} overflow-hidden bg-[#111418] text-white`}>
-        {/* Quem Somos */}
         <section className="relative overflow-hidden bg-[#087F9B] px-5 py-14 text-center shadow-[0_14px_50px_rgba(0,0,0,0.24)] sm:py-16 lg:py-20">
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.12]">
             <div className="absolute -left-20 -top-32 h-80 w-80 rounded-full border-[1px] border-white" />
@@ -54,7 +53,7 @@ const Home = () => {
           </div>
         </section>
 
-        {/* O Problema */}
+
         <section className="border-y border-[#087F9B]/50 bg-[#087F9B] px-5 py-12 text-center sm:py-14">
           <h1 className="m-0 text-4xl font-normal tracking-wide text-white sm:text-5xl lg:text-6xl">O Problema</h1>
           <div aria-hidden="true" className="mx-auto mt-5 h-[2px] w-16 rounded-full bg-white/70" />
@@ -87,7 +86,7 @@ const Home = () => {
           </div>
         </section>
 
-        {/* O Cenário Na Cidade de São Paulo */}
+
         <section className="border-y border-[#087F9B]/50 bg-[#087F9B] px-5 py-12 text-center sm:py-14">
           <h1 className="m-0 text-3xl font-normal tracking-wide text-white sm:text-5xl lg:text-6xl">O Cenário Na Cidade de São Paulo</h1>
           <div aria-hidden="true" className="mx-auto mt-5 h-[2px] w-16 rounded-full bg-white/70" />
@@ -135,7 +134,7 @@ const Home = () => {
           </article>
         </section>
 
-        {/* A Necessidade Identificada */}
+
         <section className="border-y border-[#087F9B]/50 bg-[#087F9B] px-5 py-12 text-center sm:py-14">
           <h1 className="m-0 text-3xl font-normal tracking-wide text-white sm:text-5xl lg:text-6xl">A Necessidade Identificada</h1>
           <div aria-hidden="true" className="mx-auto mt-5 h-[2px] w-16 rounded-full bg-white/70" />
