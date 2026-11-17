@@ -5,17 +5,17 @@ import Link from 'next/link'
 
 const Footer = () => {
   return (
-    <footer className=' w-full bg-[#111418]'>
-        <div className="mx-auto flex py-10 justify-center ">
+    <footer className=' sticky bottom-0 flex flex-wrap items-center w-auto justify-between px-5 bg-[#111418] '>
+        <div className="mx-auto flex py-10 justify-center flex-wrap">
             <div className='opacity-70 px-5'>
                 <p>&copy; 2026 High Water. Todos os direitos reservados.</p>
             </div>
-            <nav className='flex items-center px-10  text-white'>
+            <nav className='flex items-center gap-3 px-10  text-white'>
                     <Link href="/" className=' px-2 opacity-70 hover:opacity-100 '>Home</Link>
-                    <Link href="/Solution" className=' px-2 opacity-70 hover:opacity-100'>Solução</Link>
-                    <Link href="/Simulation" className=' px-2 opacity-70 hover:opacity-100'>Simulação</Link>            
+                    <Link href="/solution" className=' px-2 opacity-70 hover:opacity-100'>Solução</Link>
+                    <Link href="/simulation" className=' px-2 opacity-70 hover:opacity-100'>Simulação</Link>            
             </nav>
-            <div className="flex px-5 gap-4 opacity-70 text-white">
+            <div className="flex items-center px-5 gap-4 opacity-70 text-white">
                         <a href="#" className="transition hover:opacity-100">
                             Política de Privacidade
                         </a>
