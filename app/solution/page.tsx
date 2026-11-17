@@ -17,14 +17,18 @@ const neutonFont = Neuton({
 export default function SolutionPage() {
   return (
     <>
+    <header>
       <Header/>
+    </header>
         <main className="bg-[#111418] flex flex-col items-center justify-center">
           <h1 className={`${neutonFont.className} text-white text-5xl font-bold mb-6`}>Central de Monitoramento</h1>
           <LevelAlert />
         </main>
         <AlertCenter/>
         <HistoryChart/>
-      <Footer/>
+      <footer>  
+        <Footer/>
+      </footer>
     </>
   );
 }
