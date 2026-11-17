@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 const Header = () => {
   return (
-    <header className=' sticky flex flex-wrap items-center justify-between px-5 bg-[#111418] '>
+    <header className=' sticky flex flex-wrap items-center w-auto justify-between px-5 bg-[#111418] '>
         <Link href="/" className='flex items-center shrink-0'>
             <img src="/Logo.png" className='h-20 w-auto object-contain'/>
         </Link>  
